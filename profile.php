@@ -15,7 +15,7 @@
 require'conn.php';
 session_start();
 $email=$_SESSION['login_email'];
-$query = mysqli_query($conn,"SELECT username, name, age, email FROM users WHERE email = '$email'") or die(mysql_error()); 
+$query = mysqli_query($conn,"SELECT username, name, age, email, location, g1.description as lookfor, pic FROM users, genders g1 WHERE email = '$email' and g1.id=looking") or die(mysql_error()); 
 $data = mysqli_fetch_assoc($query);
 if($data)
 {
@@ -27,6 +27,13 @@ if($data)
 	echo "<span class=\"badge\">". $data['age']."</span>Age</li>";
 	echo "<li class=\"list-group-item\">";
 	echo "<span class=\"badge\">". $data['email']."</span>Email</li>";
+	echo "<li class=\"list-group-item\">";
+	echo "<span class=\"badge\">". $data['location']."</span>Location</li>";
+	echo "<li class=\"list-group-item\">";
+	echo "<span class=\"badge\">". $data['lookfor']."</span>Looking for</li>";
+	$uri = 'data:image/png;base64,'.base64_encode($data['pic']);
+	echo "<img src=\"".$uri."\">";
+	
 }
 
 ?>
