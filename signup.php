@@ -34,7 +34,11 @@ function SignUp(mysqli $conn)
 			$data = mysqli_query($conn,$query)or die(mysql_error()); 
 			if($data) 
 			{ 
-				echo "Your registration is completed"; 
+				echo "Your registration is completed";
+				session_start();
+				$_SESSION['login_email']= $email;
+				header("Location: profile.php");
+				die();				
 			}
 		} 
 		else 
