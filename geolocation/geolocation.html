@@ -1,0 +1,33 @@
+<html>
+<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+function getCoordinates(){
+	var urlPart1 = "http://maps.googleapis.com/maps/api/geocode/json?address=";
+	var urlPart2 = "=true_or_false";
+	var pos = document.getElementById("address").value;
+	// var url = "http://maps.googleapis.com/maps/api/geocode/json?address=Aachen=true_or_false";
+	var url = urlPart1 + pos + urlPart2;
+	// alert(url);
+	// var data;
+	console.log(url);
+	
+	$.getJSON(url, function(data) {
+	    //data is the JSON string
+	    var lat = data.results[0].geometry.location.lat;
+	    var lng = data.results[0].geometry.location.lng;
+
+	    document.getElementById("lat").value = lat;
+	    document.getElementById("lng").value = lng;
+	    console.log(data.results[0].geometry.location);    
+	});
+}
+	
+</script>
+	<body>
+		<input type ="text" id ="address">
+		<input type ="text" id ="lat">
+		<input type ="text" id ="lng">
+		<button type = "button" onclick = "getCoordinates()">Get Coordinates</button>
+	</body>
+</html>
