@@ -30,8 +30,15 @@ function SignUp(mysqli $conn)
 			$email = $_POST['email']; 
 			$password = $_POST['password'];
 			$age = $_POST['age'];
-			$query = "INSERT INTO users (name,username,email,password,age) VALUES ('".$name."','$username','$email','$password',$age)";
-			$data = mysqli_query($conn,$query)or die(mysql_error()); 
+			$location = $_POST['location'];
+			$gender = $_POST['gender'];
+			$looking = $_POST['looking'];
+			$lat = $_POST['lat'];
+			$lon = $_POST['lon'];
+			$file =  addslashes(file_get_contents($_FILES['photo']));
+			$query = "INSERT INTO users (name,username,email,password,age,location,gender,looking,pic,lat,lon) VALUES 
+			('".$name."','$username','$email','$password',$age,'$location',$gender,$looking,'$file',$lat,$lon)";
+			$data = mysqli_query($conn,$query); 
 			if($data) 
 			{ 
 				echo "Your registration is completed";
@@ -39,6 +46,10 @@ function SignUp(mysqli $conn)
 				$_SESSION['login_email']= $email;
 				header("Location: profile.php");
 				die();				
+			}
+			else
+			{
+				echo "Unsuccessful registration"; 
 			}
 		} 
 		else 
